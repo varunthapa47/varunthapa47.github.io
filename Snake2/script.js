@@ -34,13 +34,10 @@ const handleGameOver=()=>{
     location.reload();
 }
 
-const startGame=(e)=>{
+
     
-    if(e.key === "ArrowUp" || e.key === "ArrowDown" || e.key === "ArrowLeft" || e.key === "ArrowRight"){
-        snakeSound.play();
-    }
     
-}
+
 const changeDirection=(e)=>{
 
     if(e.key === "ArrowUp" && velocityY !== 1 )
@@ -117,8 +114,8 @@ const initGame=()=>{
     
     playBoard.innerHTML = htmlMarkup;
 }
-// snakeSound.play();
-// snakeSound.loop = true;
+snakeSound.play();
+snakeSound.loop = true;
 
 changeFoodPosition();
 
