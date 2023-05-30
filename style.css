@@ -1,11 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
 body{
     background-color: beige;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    display: block;
+    flex-direction: row;
+    text-align: center;
 }
 h1{
     background-color: palevioletred;
-    width: 250px;
+    margin: 1px 1px;
+    padding: 5px 20px;
+    border: 1px solid black;
+    /* text-align: center; */
+    
+
+    
 }
-h2{
+.project-showcase h2{
     background-color: aqua;
-    width: 100px;
+    margin: 1px 1px;
+    padding: 5px 20px;
+    /* text-align: center; */
+    
 }
+
+.projects {
+
+    display: inline-flex;    
+    justify-content: space-between;
+}
+
+.projects a:link, a:visited {
+    background-color: #f44336;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .projects a:hover, a:active {
+    background-color: red;
+  }

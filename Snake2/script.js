@@ -1,7 +1,13 @@
 
 const playBoard = document.querySelector(".play-board");
 const scoreElement = document.querySelector(".score");
-const highScoreElement = document.querySelector(".high-score")
+const highScoreElement = document.querySelector(".high-score");
+const controls = document.querySelectorAll(".controls i");
+
+let foodSound = new Audio("food.wav");
+let gameOverSound = new Audio("gameOver.wav");
+let snakeSound = new Audio("snakeTheme.mp3");
+let start = false;
 let gameOver = false;
 let foodX, foodY;
 let snakeX = 5, snakeY = 10;
@@ -22,10 +28,19 @@ const changeFoodPosition=()=>{
 
 const handleGameOver=()=>{
     clearInterval(setIntervalId);
-    alert("GameOver press Ok to Play Again...")
+    // gameOverSound.play();
+    snakeSound.pause();
+    alert("GameOver! Press Ok to Play Again...")
     location.reload();
 }
 
+const startGame=(e)=>{
+    
+    if(e.key === "ArrowUp" || e.key === "ArrowDown" || e.key === "ArrowLeft" || e.key === "ArrowRight"){
+        snakeSound.play();
+    }
+    
+}
 const changeDirection=(e)=>{
 
     if(e.key === "ArrowUp" && velocityY !== 1 )
@@ -49,15 +64,21 @@ const changeDirection=(e)=>{
         velocityY = 0;
     }
 }
+
+controls.forEach((key) => {
+
+    key.addEventListener("click",() => changeDirection({key : key.dataset.key }));
+})
 const initGame=()=>{
 
     if(gameOver) return handleGameOver();
-
+    
     let htmlMarkup = `<div class="food" style = "grid-area : ${foodY} / ${foodX} "> </div>`;
 
     if(snakeX === foodX && snakeY === foodY){
-        changeFoodPosition();
+        foodSound.play();
         snakeBody.push([foodX,foodY]);
+        changeFoodPosition();
         score++;
         
         highScore = score > highScore? score: highScore;
@@ -80,20 +101,28 @@ const initGame=()=>{
     snakeY += velocityY;
 
     if(snakeX > 30 || snakeY <= 0 || snakeX <= 0 || snakeY > 30){
+        gameOverSound.play();
         gameOver = true;
+
     }
 
     for(let i = 0; i<snakeBody.length; i++){
 
         htmlMarkup += `<div class="snake" style = "grid-area : ${snakeBody[i][1]} / ${snakeBody[i][0]} "> </div>`;
         if(i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]){
+            gameOverSound.play();
             gameOver = true;
         }
     }
     
     playBoard.innerHTML = htmlMarkup;
 }
+// snakeSound.play();
+// snakeSound.loop = true;
 
 changeFoodPosition();
+
 setIntervalId = setInterval(initGame,125);
+
 document.addEventListener("keydown",changeDirection);
+document.addEventListener("keydown",startGame);
