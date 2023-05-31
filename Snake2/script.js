@@ -3,7 +3,29 @@ const playBoard = document.querySelector(".play-board");
 const scoreElement = document.querySelector(".score");
 const highScoreElement = document.querySelector(".high-score");
 const controls = document.querySelectorAll(".controls i");
+let musicIcon = document.getElementById("music");
+let gameSound = false;
 
+
+const sound=()=>{
+
+  if(gameSound === true){
+     
+      gameSound = false;
+      snakeSound.pause();
+  }
+  else
+  {
+    gameSound = true;
+    snakeSound.play();
+    snakeSound.loop = true;
+  }
+}
+
+
+
+
+musicIcon.addEventListener("click",sound);
 let foodSound = new Audio("food.wav");
 let gameOverSound = new Audio("gameOver.wav");
 let snakeSound = new Audio("snakeTheme.mp3");
@@ -34,9 +56,6 @@ const handleGameOver=()=>{
     location.reload();
 }
 
-
-    
-    
 
 const changeDirection=(e)=>{
 
@@ -69,8 +88,7 @@ controls.forEach((key) => {
 const initGame=()=>{
 
     if(gameOver) return handleGameOver();
-    snakeSound.play();
-    snakeSound.loop = true;
+    
     let htmlMarkup = `<div class="food" style = "grid-area : ${foodY} / ${foodX} "> </div>`;
 
     if(snakeX === foodX && snakeY === foodY){
@@ -115,11 +133,11 @@ const initGame=()=>{
     
     playBoard.innerHTML = htmlMarkup;
 }
-
-
+if(gameSound){
+snakeSound.play();
+snakeSound.loop = true;
+}
 changeFoodPosition();
 
 setIntervalId = setInterval(initGame,125);
-
 document.addEventListener("keydown",changeDirection);
-document.addEventListener("keydown",startGame);
