@@ -4,7 +4,7 @@ const scoreElement = document.querySelector(".score");
 const highScoreElement = document.querySelector(".high-score");
 const controls = document.querySelectorAll(".controls i");
 let musicIcon = document.getElementById("music");
-let gameSound = false;
+let gameSound = true;
 
 
 const sound=()=>{
@@ -86,7 +86,10 @@ controls.forEach((key) => {
     key.addEventListener("click",() => changeDirection({key : key.dataset.key }));
 })
 const initGame=()=>{
-
+    if(gameSound){
+     snakeSound.play();
+     snakeSound.loop = true;
+     }
     if(gameOver) return handleGameOver();
     
     let htmlMarkup = `<div class="food" style = "grid-area : ${foodY} / ${foodX} "> </div>`;
@@ -133,10 +136,7 @@ const initGame=()=>{
     
     playBoard.innerHTML = htmlMarkup;
 }
-if(gameSound){
-snakeSound.play();
-snakeSound.loop = true;
-}
+
 changeFoodPosition();
 
 setIntervalId = setInterval(initGame,125);
