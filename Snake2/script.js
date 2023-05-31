@@ -69,7 +69,8 @@ controls.forEach((key) => {
 const initGame=()=>{
 
     if(gameOver) return handleGameOver();
-    
+    snakeSound.play();
+    snakeSound.loop = true;
     let htmlMarkup = `<div class="food" style = "grid-area : ${foodY} / ${foodX} "> </div>`;
 
     if(snakeX === foodX && snakeY === foodY){
@@ -114,8 +115,7 @@ const initGame=()=>{
     
     playBoard.innerHTML = htmlMarkup;
 }
-snakeSound.play();
-snakeSound.loop = true;
+
 
 changeFoodPosition();
 
